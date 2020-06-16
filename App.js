@@ -7,6 +7,7 @@ import {
   Text,
 } from "react-native";
 import AddEntry from "./components/AddEntry";
+import History from "./components/History";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
@@ -19,7 +20,8 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <AddEntry />
+          <History />
+          {/* <AddEntry /> */}
         </View>
       </Provider>
     );
@@ -29,7 +31,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "stretch",
     justifyContent: "center",
+    // alignItems: "stretch",
   },
 });
