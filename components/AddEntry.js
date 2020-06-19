@@ -53,7 +53,7 @@ export class AddEntry extends Component {
 
     this.props.dispatch(
       addEntry({
-        [key]: entry,
+        [key]: [entry],
       })
     );
 
@@ -72,7 +72,7 @@ export class AddEntry extends Component {
 
     this.props.dispatch(
       addEntry({
-        [key]: getDailyReminderValue(),
+        [key]: [getDailyReminderValue()],
       })
     );
 
@@ -80,6 +80,7 @@ export class AddEntry extends Component {
   };
   render() {
     const metaInfo = getMetricMetaInfo();
+    console.log("this.props: ", this.props);
     if (this.props.alreadyLogged) {
       return (
         <View style={styles.center}>
@@ -153,9 +154,13 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   const key = timeToString();
+  console.log("state[key]", state[key]);
+  console.log("state[key].length", state[key].length);
+  console.log("state[key][0]", state[key][0]);
 
   return {
-    alreadyLogged: state[key] && typeof state[key].today === "undefined",
+    alreadyLogged:
+      state[key].length > 0 && typeof state[key][0].today === "undefined",
   };
 }
 

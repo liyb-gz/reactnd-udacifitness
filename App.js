@@ -12,17 +12,22 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
 import middleware from "./middleware";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const store = createStore(reducer, middleware);
+const Tab = createBottomTabNavigator();
 
 export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <History />
-          {/* <AddEntry /> */}
-        </View>
+        <NavigationContainer>
+          <Tab.Navigator>
+            <Tab.Screen name="History" component={History} />
+            <Tab.Screen name="AddEntry" component={AddEntry} />
+          </Tab.Navigator>
+        </NavigationContainer>
       </Provider>
     );
   }
@@ -31,7 +36,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     // alignItems: "stretch",
+    marginTop: 20,
   },
 });
