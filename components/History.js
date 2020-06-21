@@ -39,19 +39,33 @@ export class History extends Component {
       });
   }
 
-  renderItem = ({ today, ...metrics }, formattedDate, key) => (
-    <View style={styles.item}>
-      {today ? (
-        <Text>{today}</Text>
-      ) : (
-        <TouchableOpacity onPress={() => console.log("Pressed")}>
-          <MetricCard metrics={metrics} />
-        </TouchableOpacity>
-      )}
-    </View>
-  );
+  renderItem = ({ today, ...metrics }) => {
+    return (
+      <View style={styles.item}>
+        {today ? (
+          <Text>{today}</Text>
+        ) : (
+          <TouchableOpacity
+            onPress={() => {
+              const entries = this.props.entries;
+              const day = Object.keys(entries).find(
+                (day) =>
+                  JSON.stringify(entries[day]) === JSON.stringify([metrics])
+              );
+              this.props.navigation.navigate("EntryDetail", {
+                entryId: day,
+              });
+            }}
+          >
+            <MetricCard metrics={metrics} />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
 
   renderEmptyDate = (formattedDate) => {
+    console.log("formattedDate", formattedDate);
     return (
       <View style={styles.item}>
         <Text style={styles.noDataText}>No Data for this day</Text>
@@ -73,9 +87,6 @@ export class History extends Component {
         renderEmptyDate={this.renderEmptyDate}
       />
     );
-    //   <View>
-    //     <Text>{JSON.stringify(entries)}</Text>
-    //   </View>
   }
 }
 
